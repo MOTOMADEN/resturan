@@ -1,0 +1,44 @@
+@media (max-width : 834px){ 
+    .hamberger__menu{
+        display: inline;
+    }
+    
+    .navigation{
+        grid-template-columns: repeat(3,auto);
+        margin: 0 auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .desktop__menu{
+        display: none;
+    }
+    .phone__menu{
+        display: flex;
+        position: fixed;
+        top: 80px;
+        bottom: 0;
+        right: -400px;
+        background:var(--red);
+        width: 16rem;
+        flex-direction: column;
+        transition: 0.7s all;
+        border-radius: 2rem;
+        -webkit-border-radius: 2rem;
+        -moz-border-radius: 2rem;
+        -ms-border-radius: 2rem;
+        -o-border-radius: 2rem;
+        box-shadow: -1px  -1px  0px 0px #fdff00;
+}
+    .phone__menu ul{
+        list-style-type: none;
+    }
+
+    .phone__menu ul li{
+        padding: 2rem;
+    }
+    .phone__menu__link{
+        padding-left: 1rem;
+        color: #fdff00;
+    }
+}
