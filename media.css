@@ -2,6 +2,8 @@
     .hamberger__menu {
         display: inline;
         cursor: pointer;
+        position: fixed;
+        right: 10px;
     }
     
     .navigation {
