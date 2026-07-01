@@ -1,18 +1,5 @@
 @media (max-width: 834px) { 
-    .hamberger__menu {
-        display: inline;
-        cursor: pointer;
-        position: fixed;
-        right: 10px;
-    }
     
-    .navigation {
-        grid-template-columns: repeat(3, auto);
-        margin: 0 auto;
-        padding-left: 1rem;
-        padding-right: 1rem;
-        gap: 10px;
-    }
 
     .link__navigation {
         display: none;
