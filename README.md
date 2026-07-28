@@ -8,7 +8,7 @@
 
 > **A fully responsive restaurant ordering system inspired by McDonald's brand identity**
 
-[🔗 Live Demo](https://github.com/motomaden.github.io/resturan/)  
+[🔗 Live Demo](https://motomaden.github.io/resturan/)  
 [📂 GitHub Repository](https://github.com/motomaden.github.io/resturan/)
 
 ---
