@@ -1,11 +1,11 @@
 // ============================================================
-// 1. MENU TOGGLE (همون منوی موبایل که خودت نوشتی - بهینه شده)
+// 1. MOBILE MENU TOGGLE
 // ============================================================
 const menu = document.querySelector(".phone__menu");
 const menuBtn = document.querySelector(".hamberger__menu");
 const menuBtnIcon = document.querySelector(".hamberger__menu img");
 
-menuBtn.addEventListener("click", function() {
+menuBtn.addEventListener("click", function () {
     if (menuBtnIcon.classList.contains("burgerocon")) {
         menu.style.right = "0";
         menuBtnIcon.classList = "hiden";
@@ -17,7 +17,7 @@ menuBtn.addEventListener("click", function() {
     }
 });
 
-// بستن منو با کلیک روی لینک‌ها
+// Close menu when clicking on links
 document.querySelectorAll(".phone__menu__link").forEach(link => {
     link.addEventListener("click", () => {
         menu.style.right = "-400px";
@@ -27,7 +27,7 @@ document.querySelectorAll(".phone__menu__link").forEach(link => {
 });
 
 // ============================================================
-// 2. COUNTER (دکمه‌های + و -) - با آپدیت قیمت کل
+// 2. ORDER COUNTER WITH PRICE UPDATE
 // ============================================================
 const addBtn = document.querySelector(".add");
 const minesBtn = document.querySelector(".mines");
@@ -40,8 +40,8 @@ const BASE_PRICE = 5.39;
 function updateCounter() {
     numberSpan.innerText = count < 10 ? "0" + count : count;
     minesBtn.disabled = count <= 0;
-    
-    // آپدیت قیمت کل
+
+    // Update total price
     const total = (count * BASE_PRICE).toFixed(2);
     totalPriceSpan.textContent = total + "$";
 }
@@ -58,11 +58,11 @@ minesBtn.addEventListener("click", () => {
     }
 });
 
-// مقداردهی اولیه
+// Initial setup
 updateCounter();
 
 // ============================================================
-// 3. SOCIAL MEDIA LINKS (بهینه شده)
+// 3. SOCIAL MEDIA LINKS
 // ============================================================
 const socialLinks = [
     { selector: ".x__page", url: "https://x.com/Khamenei_m" },
@@ -77,12 +77,12 @@ socialLinks.forEach(link => {
 });
 
 // ============================================================
-// 4. FILTER MENU (فیلتر کردن منو بر اساس دسته‌بندی)
+// 4. MENU FILTER SYSTEM
 // ============================================================
 const filterButtons = document.querySelectorAll(".row__button__category button");
 const foodItems = document.querySelectorAll("#box");
 
-// به هر آیتم منو یک data-category اضافه می‌کنیم (بر اساس اسم غذا)
+// Map categories to food items
 const categoryMap = {
     "Best seller": ["Cheese Beef Hamburger", "Combo funny"],
     "Hamberger": ["Cheese Beef Hamburger", "Chicken burger"],
@@ -91,39 +91,38 @@ const categoryMap = {
     "Fried chicken": ["Chicken with Spicy Sauce", "Combo funny", "Chicken burger"]
 };
 
-// تگ‌های data-category رو به آیتم‌ها اضافه کن
-foodItems.forEach((item, index) => {
+// Add data-category tags to items
+foodItems.forEach((item) => {
     const title = item.querySelector(".box__detail h2")?.innerText || "";
     let category = "all";
-    
+
     for (const [key, values] of Object.entries(categoryMap)) {
         if (values.some(v => title.includes(v))) {
             category = key.toLowerCase();
             break;
         }
     }
-    // اگه لیپتون باشه
+    // Special cases
     if (title.includes("Lipton")) category = "drink";
     if (title.includes("Salad")) category = "dessert";
-    
+
     item.dataset.category = category;
 });
 
 filterButtons.forEach(btn => {
-    btn.addEventListener("click", function() {
-        // حذف کلاس active از همه
+    btn.addEventListener("click", function () {
+        // Remove active class from all buttons
         filterButtons.forEach(b => b.classList.remove("Best__seller"));
-        
-        // اضافه کردن کلاس active به دکمه کلیک شده
+
+        // Add active class to clicked button
         if (!this.classList.contains("Best__seller")) {
             this.classList.add("Best__seller");
         }
-        
-        // گرفتن دسته‌بندی از متن دکمه
+
+        // Get category from button text
         const categoryText = this.innerText.trim().toLowerCase();
-        let filterCategory = categoryText;
-        
-        // نگاشت دکمه‌ها به دسته‌بندی‌ها
+
+        // Map button text to categories
         const categoryMapping = {
             "best seller": "all",
             "hamberger": "hamberger",
@@ -131,10 +130,10 @@ filterButtons.forEach(btn => {
             "dessert": "dessert",
             "fried chicken": "fried chicken"
         };
-        
+
         const targetCategory = categoryMapping[categoryText] || "all";
-        
-        // فیلتر کردن آیتم‌ها
+
+        // Filter items
         foodItems.forEach(item => {
             const itemCategory = item.dataset.category || "all";
             if (targetCategory === "all" || itemCategory === targetCategory) {
@@ -147,17 +146,17 @@ filterButtons.forEach(btn => {
 });
 
 // ============================================================
-// 5. LIVE SEARCH (جستجوی زنده)
+// 5. LIVE SEARCH FUNCTIONALITY
 // ============================================================
 const searchInput = document.querySelector("#fsrch");
 
-searchInput?.addEventListener("input", function() {
+searchInput?.addEventListener("input", function () {
     const query = this.value.toLowerCase().trim();
-    
+
     foodItems.forEach(item => {
         const title = item.querySelector(".box__detail h2")?.innerText?.toLowerCase() || "";
         const desc = item.querySelector(".box__detail h5")?.innerText?.toLowerCase() || "";
-        
+
         if (title.includes(query) || desc.includes(query) || query === "") {
             item.style.display = "grid";
         } else {
@@ -167,13 +166,13 @@ searchInput?.addEventListener("input", function() {
 });
 
 // ============================================================
-// 6. SMOOTH SCROLL (اسکرول نرم به بخش‌ها)
+// 6. SMOOTH SCROLL FOR ANCHOR LINKS
 // ============================================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener("click", function(e) {
+    anchor.addEventListener("click", function (e) {
         const href = this.getAttribute("href");
         if (href === "#") return;
-        
+
         const target = document.querySelector(href);
         if (target) {
             e.preventDefault();
@@ -186,9 +185,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ============================================================
-// 7. DARK/LIGHT MODE (تم تاریک/روشن)
+// 7. DARK/LIGHT MODE
 // ============================================================
-// ایجاد دکمه تم در هدر (اگه وجود نداشت)
+// Create theme toggle button
 const headerNav = document.querySelector(".navigation");
 if (headerNav && !document.querySelector(".theme-toggle")) {
     const themeBtn = document.createElement("button");
@@ -217,15 +216,15 @@ if (headerNav && !document.querySelector(".theme-toggle")) {
         font-size: 1.8rem;
     `;
     document.body.appendChild(themeBtn);
-    
-    // چک کردن تم ذخیره شده
+
+    // Check saved theme
     const savedTheme = localStorage.getItem("theme") || "light";
     if (savedTheme === "dark") {
         document.body.classList.add("dark-mode");
         themeBtn.innerHTML = "☀️";
     }
-    
-    themeBtn.addEventListener("click", function() {
+
+    themeBtn.addEventListener("click", function () {
         document.body.classList.toggle("dark-mode");
         const isDark = document.body.classList.contains("dark-mode");
         this.innerHTML = isDark ? "☀️" : "🌙";
@@ -233,7 +232,7 @@ if (headerNav && !document.querySelector(".theme-toggle")) {
     });
 }
 
-// استایل‌های تم تاریک (با جاوااسکریپت اضافه می‌شه)
+// Dark mode styles
 const darkStyles = `
 .dark-mode {
     background: #1a1a1a !important;
@@ -324,13 +323,13 @@ const darkStyles = `
 }
 `;
 
-// اضافه کردن استایل‌های تاریک
+// Add dark styles to document
 const styleSheet = document.createElement("style");
 styleSheet.textContent = darkStyles;
 document.head.appendChild(styleSheet);
 
 // ============================================================
-// 8. AUTO SLIDER (اسلایدر خودکار برای بخش تخفیف‌ها)
+// 8. AUTO SLIDER FOR OFFERS (Mobile Only)
 // ============================================================
 const offersContainer = document.querySelector(".off__offers");
 const offerItems = document.querySelectorAll(".off__offers > div");
@@ -338,16 +337,16 @@ const offerItems = document.querySelectorAll(".off__offers > div");
 if (offersContainer && offerItems.length > 0) {
     let currentSlide = 0;
     const totalSlides = offerItems.length;
-    
-    // فقط برای موبایل اسلایدر فعال بشه
+
+    // Activate slider only on mobile
     if (window.innerWidth < 834) {
         offersContainer.style.overflow = "hidden";
         offersContainer.style.position = "relative";
-        
-        // دکمه‌های قبلی/بعدی
+
+        // Previous/Next buttons
         const prevBtn = document.createElement("button");
         const nextBtn = document.createElement("button");
-        
+
         [prevBtn, nextBtn].forEach((btn, i) => {
             btn.innerHTML = i === 0 ? "❮" : "❯";
             btn.style.cssText = `
@@ -368,7 +367,7 @@ if (offersContainer && offerItems.length > 0) {
             `;
             offersContainer.appendChild(btn);
         });
-        
+
         function showSlide(index) {
             offerItems.forEach((item, i) => {
                 item.style.display = i === index ? "flex" : "none";
@@ -378,27 +377,27 @@ if (offersContainer && offerItems.length > 0) {
             prevBtn.style.display = "block";
             nextBtn.style.display = "block";
         }
-        
+
         prevBtn.addEventListener("click", () => {
             currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
             showSlide(currentSlide);
         });
-        
+
         nextBtn.addEventListener("click", () => {
             currentSlide = (currentSlide + 1) % totalSlides;
             showSlide(currentSlide);
         });
-        
-        // شروع اسلایدر
+
+        // Start slider
         showSlide(0);
-        
-        // اسلایدر خودکار (هر 4 ثانیه)
+
+        // Auto slide every 4 seconds
         let autoSlide = setInterval(() => {
             currentSlide = (currentSlide + 1) % totalSlides;
             showSlide(currentSlide);
         }, 4000);
-        
-        // توقف اسلایدر با هاور
+
+        // Pause on hover
         offersContainer.addEventListener("mouseenter", () => clearInterval(autoSlide));
         offersContainer.addEventListener("mouseleave", () => {
             autoSlide = setInterval(() => {
@@ -410,11 +409,11 @@ if (offersContainer && offerItems.length > 0) {
 }
 
 // ============================================================
-// 9. ADD TO CART SYSTEM (سیستم سبد خرید کامل)
+// 9. SHOPPING CART SYSTEM
 // ============================================================
 let cart = JSON.parse(localStorage.getItem("restaurant_cart")) || [];
 
-// ایجاد آیکون سبد خرید در هدر
+// Create cart icon in header
 const cartIcon = document.createElement("div");
 cartIcon.className = "cart-icon";
 cartIcon.style.cssText = `
@@ -438,21 +437,21 @@ cartIcon.innerHTML = `
     🛒 <span class="cart-count">${cart.length}</span>
 `;
 
-// نمایش سبد خرید با کلیک
-cartIcon.addEventListener("click", function() {
+// Show cart modal on click
+cartIcon.addEventListener("click", function () {
     showCartModal();
 });
 
 document.body.appendChild(cartIcon);
 
-// تابع نمایش مودال سبد خرید
+// Show cart modal
 function showCartModal() {
     const existingModal = document.querySelector(".cart-modal");
     if (existingModal) {
         existingModal.remove();
         return;
     }
-    
+
     const modal = document.createElement("div");
     modal.className = "cart-modal";
     modal.style.cssText = `
@@ -470,16 +469,16 @@ function showCartModal() {
         max-height: 80vh;
         overflow-y: auto;
     `;
-    
+
     if (document.body.classList.contains("dark-mode")) {
         modal.style.background = "#2a2a2a";
         modal.style.color = "#f0f0f0";
     }
-    
-    let cartHTML = `<h2 style="margin-bottom:1rem;color:var(--red, #c90000);">🛒 سبد خرید</h2>`;
-    
+
+    let cartHTML = `<h2 style="margin-bottom:1rem;color:var(--red, #c90000);">🛒 Shopping Cart</h2>`;
+
     if (cart.length === 0) {
-        cartHTML += `<p style="text-align:center;padding:2rem 0;color:#888;">سبد خرید خالی است 🍽️</p>`;
+        cartHTML += `<p style="text-align:center;padding:2rem 0;color:#888;">Your cart is empty 🍽️</p>`;
     } else {
         let total = 0;
         cart.forEach((item, index) => {
@@ -497,26 +496,26 @@ function showCartModal() {
         });
         cartHTML += `
             <div style="display:flex;justify-content:space-between;padding:1rem 0;font-weight:bold;font-size:1.2rem;border-top:2px solid var(--red, #c90000);margin-top:0.5rem;">
-                <span>جمع کل:</span>
+                <span>Total:</span>
                 <span style="color:var(--red, #c90000);">$${total.toFixed(2)}</span>
             </div>
             <button onclick="clearCart()" style="width:100%;padding:0.8rem;background:var(--red, #c90000);color:white;border:none;border-radius:10px;font-weight:bold;cursor:pointer;margin-top:0.5rem;font-size:1rem;">
-                🗑️ خالی کردن سبد
+                🗑️ Clear Cart
             </button>
         `;
     }
-    
+
     cartHTML += `
         <button onclick="this.parentElement.remove()" style="width:100%;padding:0.8rem;background:#444;color:white;border:none;border-radius:10px;cursor:pointer;margin-top:0.5rem;font-size:1rem;">
-            ✖ بستن
+            ✖ Close
         </button>
     `;
-    
+
     modal.innerHTML = cartHTML;
     document.body.appendChild(modal);
 }
 
-// تابع اضافه کردن به سبد خرید
+// Add item to cart
 function addToCart(name, price) {
     const existing = cart.find(item => item.name === name);
     if (existing) {
@@ -526,24 +525,24 @@ function addToCart(name, price) {
     }
     localStorage.setItem("restaurant_cart", JSON.stringify(cart));
     document.querySelector(".cart-count").textContent = cart.length;
-    
-    // انیمیشن
+
+    // Animation
     const icon = document.querySelector(".cart-icon");
     icon.style.transform = "scale(1.2)";
     setTimeout(() => icon.style.transform = "scale(1)", 200);
 }
 
-// تابع حذف از سبد خرید
+// Remove item from cart
 function removeFromCart(index) {
     cart.splice(index, 1);
     localStorage.setItem("restaurant_cart", JSON.stringify(cart));
     document.querySelector(".cart-count").textContent = cart.length;
-    showCartModal(); // رفرش مودال
+    showCartModal(); // Refresh modal
 }
 
-// تابع خالی کردن سبد
+// Clear cart
 function clearCart() {
-    if (confirm("آیا مطمئنی می‌خوای سبد رو خالی کنی؟")) {
+    if (confirm("Are you sure you want to clear your cart?")) {
         cart = [];
         localStorage.setItem("restaurant_cart", JSON.stringify(cart));
         document.querySelector(".cart-count").textContent = 0;
@@ -551,35 +550,33 @@ function clearCart() {
     }
 }
 
-// اضافه کردن event listener به دکمه‌های سفارش
-document.querySelectorAll(".box__ordering button").forEach((btn, index) => {
-    btn.addEventListener("click", function(e) {
+// Add to cart buttons - Menu items
+document.querySelectorAll(".box__ordering button").forEach((btn) => {
+    btn.addEventListener("click", function (e) {
         e.stopPropagation();
         const box = this.closest("#box");
-        const name = box.querySelector(".box__detail h2")?.innerText || "غذای ویژه";
+        const name = box.querySelector(".box__detail h2")?.innerText || "Special Food";
         const priceText = box.querySelector(".box__ordering h3")?.innerText || "5.39$";
-        
+
         addToCart(name, priceText);
-        
-        // نمایش پیام موفقیت
-        showToast(`${name} به سبد خرید اضافه شد ✅`);
+        showToast(`${name} added to cart ✅`);
     });
 });
 
-// دکمه‌های Order Now در بخش تخفیف‌ها
+// Add to cart buttons - Offer items
 document.querySelectorAll("#secend__order__now").forEach(btn => {
-    btn.addEventListener("click", function(e) {
+    btn.addEventListener("click", function (e) {
         e.stopPropagation();
         const parent = this.closest(".right__offer, .mid__offer, .left__offer");
-        const name = parent?.querySelector(".top__off__offer__side h4:last-child")?.innerText || "غذای ویژه";
+        const name = parent?.querySelector(".top__off__offer__side h4:last-child")?.innerText || "Special Offer";
         const priceText = parent?.querySelector(".price__side__of__offer h2:last-child")?.innerText || "8.3$";
-        
+
         addToCart(name, priceText);
-        showToast(`${name} به سبد خرید اضافه شد ✅`);
+        showToast(`${name} added to cart ✅`);
     });
 });
 
-// تابع نمایش پیام toast
+// Toast notification
 function showToast(message) {
     const toast = document.createElement("div");
     toast.style.cssText = `
@@ -599,14 +596,14 @@ function showToast(message) {
     `;
     toast.textContent = message;
     document.body.appendChild(toast);
-    
+
     setTimeout(() => {
         toast.style.animation = "slideDown 0.5s ease";
         setTimeout(() => toast.remove(), 500);
     }, 2500);
 }
 
-// اضافه کردن keyframeهای انیمیشن
+// Toast animations
 const toastStyles = document.createElement("style");
 toastStyles.textContent = `
     @keyframes slideUp {
@@ -621,7 +618,7 @@ toastStyles.textContent = `
 document.head.appendChild(toastStyles);
 
 // ============================================================
-// 10. BACK TO TOP (دکمه برگشت به بالا)
+// 10. BACK TO TOP BUTTON
 // ============================================================
 const backToTopBtn = document.createElement("button");
 backToTopBtn.innerHTML = "⬆";
@@ -646,7 +643,7 @@ backToTopBtn.style.cssText = `
 `;
 document.body.appendChild(backToTopBtn);
 
-window.addEventListener("scroll", function() {
+window.addEventListener("scroll", function () {
     if (window.scrollY > 500) {
         backToTopBtn.style.opacity = "1";
         backToTopBtn.style.transform = "scale(1)";
@@ -658,7 +655,7 @@ window.addEventListener("scroll", function() {
     }
 });
 
-backToTopBtn.addEventListener("click", function() {
+backToTopBtn.addEventListener("click", function () {
     window.scrollTo({
         top: 0,
         behavior: "smooth"
@@ -666,24 +663,25 @@ backToTopBtn.addEventListener("click", function() {
 });
 
 // ============================================================
-// 11. SET DEFAULT FILTER TO "BEST SELLER"
+// 11. SET DEFAULT FILTER
 // ============================================================
-// نمایش همه آیتم‌ها در ابتدا
+// Show all items initially
 foodItems.forEach(item => item.style.display = "grid");
 
-// فعال کردن دکمه Best Seller به صورت پیش‌فرض
+// Activate Best Seller filter by default
 const bestSellerBtn = document.querySelector(".Best__seller");
 if (bestSellerBtn) {
     bestSellerBtn.click();
 }
+
 // ============================================================
 // 12. RATING & REVIEWS SYSTEM
 // ============================================================
 const reviews = JSON.parse(localStorage.getItem("food_reviews")) || {};
 
-// افزودن سیستم امتیازدهی به هر غذا
+// Add rating system to each food item
 document.querySelectorAll("#box").forEach((box, index) => {
-    const foodName = box.querySelector(".box__detail h2")?.innerText || `غذا ${index + 1}`;
+    const foodName = box.querySelector(".box__detail h2")?.innerText || `Food ${index + 1}`;
     const reviewContainer = document.createElement("div");
     reviewContainer.className = "review-container";
     reviewContainer.style.cssText = `
@@ -696,11 +694,11 @@ document.querySelectorAll("#box").forEach((box, index) => {
         gap: 8px;
         flex-wrap: wrap;
     `;
-    
-    // ستاره‌ها
+
+    // Star rating
     const starsDiv = document.createElement("div");
     starsDiv.style.cssText = `display: flex; gap: 2px; cursor: pointer;`;
-    
+
     for (let i = 1; i <= 5; i++) {
         const star = document.createElement("span");
         star.innerHTML = "☆";
@@ -710,17 +708,17 @@ document.querySelectorAll("#box").forEach((box, index) => {
             transition: 0.3s;
         `;
         star.dataset.rating = i;
-        
-        star.addEventListener("click", function(e) {
+
+        star.addEventListener("click", function (e) {
             e.stopPropagation();
             const rating = parseInt(this.dataset.rating);
             reviews[foodName] = { rating, comment: "" };
             localStorage.setItem("food_reviews", JSON.stringify(reviews));
             updateStars(foodName);
-            showToast(`⭐ به ${foodName} امتیاز ${rating} دادید!`);
+            showToast(`⭐ You rated ${foodName} ${rating} stars!`);
         });
-        
-        star.addEventListener("mouseenter", function() {
+
+        star.addEventListener("mouseenter", function () {
             const rating = parseInt(this.dataset.rating);
             const allStars = this.parentElement.querySelectorAll("span");
             allStars.forEach((s, idx) => {
@@ -728,14 +726,14 @@ document.querySelectorAll("#box").forEach((box, index) => {
                 s.style.color = idx < rating ? "#FFC300" : "#ddd";
             });
         });
-        
-        star.addEventListener("mouseleave", function() {
+
+        star.addEventListener("mouseleave", function () {
             updateStars(foodName);
         });
-        
+
         starsDiv.appendChild(star);
     }
-    
+
     function updateStars(foodName) {
         const allStars = starsDiv.querySelectorAll("span");
         const rating = reviews[foodName]?.rating || 0;
@@ -744,62 +742,62 @@ document.querySelectorAll("#box").forEach((box, index) => {
             s.style.color = idx < rating ? "#FFC300" : "#ddd";
         });
     }
-    
-    // نمایش میانگین امتیاز
+
+    // Show average rating
     const avgRating = document.createElement("span");
     avgRating.style.cssText = `
         font-size: 0.8rem;
         color: #666;
         margin-left: 5px;
     `;
-    
+
     function updateAvgRating() {
         const allRatings = Object.values(reviews)
             .filter(r => r.rating)
             .map(r => r.rating);
         if (allRatings.length > 0) {
             const avg = (allRatings.reduce((a, b) => a + b, 0) / allRatings.length).toFixed(1);
-            avgRating.textContent = `⭐ ${avg} (${allRatings.length} نظر)`;
+            avgRating.textContent = `⭐ ${avg} (${allRatings.length} reviews)`;
         } else {
-            avgRating.textContent = "⭐ بدون امتیاز";
+            avgRating.textContent = "⭐ No ratings yet";
         }
     }
-    
+
     reviewContainer.appendChild(starsDiv);
     reviewContainer.appendChild(avgRating);
     box.querySelector(".box__button")?.appendChild(reviewContainer);
-    
-    // اجرای اولیه
+
+    // Initial setup
     updateStars(foodName);
     updateAvgRating();
 });
 
 // ============================================================
-// 13. ORDER HISTORY (تاریخچه سفارش‌ها)
+// 13. ORDER HISTORY
 // ============================================================
 let orderHistory = JSON.parse(localStorage.getItem("order_history")) || [];
 
-// وقتی کاربر سفارش داد، توی تاریخچه ذخیره کن
+// Save order to history when adding to cart
 const originalAddToCart = addToCart;
-addToCart = function(name, price) {
+addToCart = function (name, price) {
     originalAddToCart(name, price);
-    
-    // ذخیره در تاریخچه
+
+    // Save to history
     const order = {
         id: Date.now(),
         name,
         price,
         quantity: 1,
-        date: new Date().toLocaleString("fa-IR"),
-        status: "در انتظار تایید"
+        date: new Date().toLocaleString("en-US"),
+        status: "Pending"
     };
     orderHistory.push(order);
     localStorage.setItem("order_history", JSON.stringify(orderHistory));
 };
 
-// نمایش تاریخچه سفارش‌ها (با دکمه جدید)
+// Create history button
 const historyBtn = document.createElement("button");
-historyBtn.innerHTML = "📋 تاریخچه سفارش‌ها";
+historyBtn.innerHTML = "📋 Order History";
 historyBtn.style.cssText = `
     position: fixed;
     bottom: 160px;
@@ -818,20 +816,20 @@ historyBtn.style.cssText = `
 `;
 document.body.appendChild(historyBtn);
 
-historyBtn.addEventListener("click", function() {
+historyBtn.addEventListener("click", function () {
     if (orderHistory.length === 0) {
-        showToast("📭 هنوز سفارشی ثبت نکردید!");
+        showToast("📭 No orders yet!");
         return;
     }
-    
+
     let historyHTML = `
         <div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
                     background:white;padding:2rem;border-radius:20px;z-index:999999;
                     max-width:500px;width:90%;max-height:80vh;overflow-y:auto;
                     box-shadow:0 20px 60px rgba(0,0,0,0.3);">
-            <h2 style="margin-bottom:1rem;color:#c90000;">📋 تاریخچه سفارش‌ها</h2>
+            <h2 style="margin-bottom:1rem;color:#c90000;">📋 Order History</h2>
     `;
-    
+
     orderHistory.slice().reverse().forEach(order => {
         historyHTML += `
             <div style="display:flex;justify-content:space-between;align-items:center;
@@ -848,28 +846,28 @@ historyBtn.addEventListener("click", function() {
             </div>
         `;
     });
-    
+
     historyHTML += `
         <button onclick="this.parentElement.remove()" 
                 style="width:100%;padding:0.8rem;background:#c90000;color:white;
                        border:none;border-radius:10px;cursor:pointer;margin-top:1rem;
                        font-weight:bold;">
-            ✖ بستن
+            ✖ Close
         </button>
     </div>`;
-    
+
     const modal = document.createElement("div");
     modal.innerHTML = historyHTML;
     document.body.appendChild(modal.firstElementChild);
 });
 
 // ============================================================
-// 14. COUNTDOWN TIMER (تایمر تخفیف)
+// 14. COUNTDOWN TIMER FOR OFFERS
 // ============================================================
 function createCountdown() {
     const targetDate = new Date();
-    targetDate.setHours(targetDate.getHours() + 24); // ۲۴ ساعت دیگه
-    
+    targetDate.setHours(targetDate.getHours() + 24); // 24 hours from now
+
     const timerContainer = document.createElement("div");
     timerContainer.style.cssText = `
         background: var(--red, #c90000);
@@ -883,33 +881,33 @@ function createCountdown() {
         font-size: 1.1rem;
         box-shadow: 0 4px 15px rgba(201, 0, 0, 0.3);
     `;
-    
+
     const timerDisplay = document.createElement("span");
-    timerContainer.innerHTML = "⏳ تخفیف ویژه تا: ";
+    timerContainer.innerHTML = "⏳ Special offer ends in: ";
     timerContainer.appendChild(timerDisplay);
-    
-    // اضافه کردن به بالای بخش تخفیف‌ها
+
+    // Add to top of offers section
     const saleSection = document.querySelector(".section__off");
     if (saleSection) {
         saleSection.insertBefore(timerContainer, saleSection.firstChild);
     }
-    
+
     function updateTimer() {
         const now = new Date();
         const diff = targetDate - now;
-        
+
         if (diff <= 0) {
-            timerDisplay.textContent = "🎉 تخفیف به پایان رسید!";
+            timerDisplay.textContent = "🎉 Offer expired!";
             return;
         }
-        
+
         const hours = Math.floor(diff / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        
+
         timerDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     }
-    
+
     updateTimer();
     setInterval(updateTimer, 1000);
 }
@@ -917,67 +915,160 @@ function createCountdown() {
 createCountdown();
 
 // ============================================================
-// 15. WELCOME POPUP (پاپ‌آپ خوش‌آمدگویی)
+// 15. WELCOME POPUP
 // ============================================================
 if (!localStorage.getItem("visited_before")) {
     setTimeout(() => {
-        const popup = document.createElement("div");
-        popup.style.cssText = `
+        // Create overlay
+        const overlay = document.createElement("div");
+        overlay.className = "welcome-overlay";
+        overlay.style.cssText = `
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.75);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 999999;
             animation: fadeIn 0.5s ease;
+            backdrop-filter: blur(8px);
         `;
-        
-        popup.innerHTML = `
-            <div style="background: white; padding: 2.5rem; border-radius: 20px; max-width: 450px; 
-                        width: 90%; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
-                <div style="font-size: 4rem; margin-bottom: 1rem;">🍔</div>
-                <h2 style="color: #c90000; margin-bottom: 0.5rem;">به رستوران ما خوش آمدید! 🎉</h2>
-                <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
-                    اولین سفارشت رو ثبت کن و <strong style="color: #FFC300;">۱۰٪ تخفیف</strong> بگیر!
-                </p>
-                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                    <button onclick="this.closest('div[style]').parentElement.remove(); localStorage.setItem('visited_before','true')" 
-                            style="background: #c90000; color: white; border: none; padding: 12px 30px; 
-                                   border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1rem;">
-                        🛒 شروع سفارش
-                    </button>
-                    <button onclick="this.closest('div[style]').parentElement.remove();" 
-                            style="background: #eee; color: #333; border: none; padding: 12px 30px; 
-                                   border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1rem;">
-                        بعداً
-                    </button>
-                </div>
+
+        const popupBox = document.createElement("div");
+        popupBox.className = "welcome-popup";
+        popupBox.style.cssText = `
+            background: white;
+            padding: 2.5rem;
+            border-radius: 24px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+            animation: slideUp 0.6s ease;
+            position: relative;
+        `;
+
+        // Popup content
+        popupBox.innerHTML = `
+            <div style="font-size: 4.5rem; margin-bottom: 0.5rem;">🍔</div>
+            <h2 style="color: #c90000; margin-bottom: 0.8rem; font-size: 1.8rem;">
+                Welcome to Our Restaurant! 🎉
+            </h2>
+            <p style="color: #666; margin-bottom: 1.8rem; line-height: 1.8; font-size: 1.05rem;">
+                Place your first order and get 
+                <strong style="color: #FFC300; font-size: 1.3rem;">10% OFF</strong>!
+            </p>
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <button id="startOrderBtn" 
+                        style="background: #c90000; color: white; border: none; 
+                               padding: 14px 35px; border-radius: 50px; 
+                               cursor: pointer; font-weight: bold; font-size: 1.05rem;
+                               transition: 0.3s; box-shadow: 0 4px 15px rgba(201,0,0,0.3);">
+                    🛒 Start Order
+                </button>
+                <button id="laterBtn" 
+                        style="background: #f0f0f0; color: #333; border: none; 
+                               padding: 14px 35px; border-radius: 50px; 
+                               cursor: pointer; font-weight: bold; font-size: 1.05rem;
+                               transition: 0.3s;">
+                    Later ⏰
+                </button>
             </div>
         `;
-        
-        document.body.appendChild(popup);
-        
-        // اضافه کردن keyframe
-        const fadeStyle = document.createElement("style");
-        fadeStyle.textContent = `
+
+        overlay.appendChild(popupBox);
+        document.body.appendChild(overlay);
+
+        // Close popup function
+        function closePopup() {
+            overlay.style.opacity = "0";
+            overlay.style.transition = "opacity 0.3s ease";
+            setTimeout(() => {
+                overlay.remove();
+                localStorage.setItem("visited_before", "true");
+            }, 300);
+        }
+
+        // Start Order button
+        document.getElementById("startOrderBtn")?.addEventListener("click", function (e) {
+            e.preventDefault();
+            closePopup();
+
+            // Scroll to menu section
+            const menuSection = document.querySelector(".section__food");
+            if (menuSection) {
+                setTimeout(() => {
+                    menuSection.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }, 400);
+            }
+
+            setTimeout(() => {
+                showToast("🎉 Let's order! Pick your favorite food!");
+            }, 600);
+        });
+
+        // Later button
+        document.getElementById("laterBtn")?.addEventListener("click", function (e) {
+            e.preventDefault();
+            closePopup();
+
+            setTimeout(() => {
+                showToast("👋 Come back when you're ready! 😊");
+            }, 400);
+        });
+
+        // Click outside to close
+        overlay.addEventListener("click", function (e) {
+            if (e.target === overlay) {
+                closePopup();
+            }
+        });
+
+        // Add animations
+        const styleAnim = document.createElement("style");
+        styleAnim.textContent = `
             @keyframes fadeIn {
-                from { opacity: 0; transform: scale(0.9); }
-                to { opacity: 1; transform: scale(1); }
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes slideUp {
+                from { 
+                    opacity: 0; 
+                    transform: translateY(40px) scale(0.95); 
+                }
+                to { 
+                    opacity: 1; 
+                    transform: translateY(0) scale(1); 
+                }
+            }
+            .welcome-popup {
+                animation: slideUp 0.6s ease;
+            }
+            #startOrderBtn:hover {
+                transform: scale(1.05);
+                box-shadow: 0 6px 25px rgba(201,0,0,0.4);
+            }
+            #laterBtn:hover {
+                background: #e0e0e0;
+                transform: scale(1.02);
             }
         `;
-        document.head.appendChild(fadeStyle);
-    }, 1000);
+        document.head.appendChild(styleAnim);
+
+    }, 800);
 }
 
 // ============================================================
-// 16. WHATSAPP ORDER (سفارش در واتساپ)
+// 16. WHATSAPP ORDER
 // ============================================================
 const whatsappBtn = document.createElement("button");
-whatsappBtn.innerHTML = "📱 سفارش در واتساپ";
+whatsappBtn.innerHTML = "📱 Order on WhatsApp";
 whatsappBtn.style.cssText = `
     position: fixed;
     bottom: 220px;
@@ -996,31 +1087,31 @@ whatsappBtn.style.cssText = `
 `;
 document.body.appendChild(whatsappBtn);
 
-whatsappBtn.addEventListener("click", function() {
+whatsappBtn.addEventListener("click", function () {
     if (cart.length === 0) {
-        showToast("🛒 اول یه چیزی به سبد خرید اضافه کن!");
+        showToast("🛒 Add something to your cart first!");
         return;
     }
-    
-    let message = "🍔 *سفارش جدید رستوران* 🍔\n\n";
+
+    let message = "🍔 *New Restaurant Order* 🍔\n\n";
     let total = 0;
     cart.forEach(item => {
         const price = parseFloat(item.price.replace("$", ""));
         total += price * item.quantity;
         message += `• ${item.name} × ${item.quantity} = ${(price * item.quantity).toFixed(2)}$\n`;
     });
-    message += `\n💰 *جمع کل:* $${total.toFixed(2)}`;
-    message += `\n\n📅 تاریخ: ${new Date().toLocaleString('fa-IR')}`;
-    message += `\n\nلطفاً سفارش من رو ثبت کنید 🙏`;
-    
-    // شماره واتساپ (اینجا شماره رستوران رو بذار)
-    const phoneNumber = "989123456789"; // شماره رو عوض کن
-    
+    message += `\n💰 *Total:* $${total.toFixed(2)}`;
+    message += `\n\n📅 Date: ${new Date().toLocaleString('en-US')}`;
+    message += `\n\nPlease confirm my order 🙏`;
+
+    // WhatsApp phone number (change this to your restaurant number)
+    const phoneNumber = "989123456789";
+
     window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, "_blank");
 });
 
 // ============================================================
-// 17. SCROLL PROGRESS BAR (نوار پیشرفت اسکرول)
+// 17. SCROLL PROGRESS BAR
 // ============================================================
 const progressBar = document.createElement("div");
 progressBar.style.cssText = `
@@ -1036,12 +1127,9 @@ progressBar.style.cssText = `
 `;
 document.body.appendChild(progressBar);
 
-window.addEventListener("scroll", function() {
+window.addEventListener("scroll", function () {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = (scrollTop / docHeight) * 100;
     progressBar.style.width = progress + "%";
 });
-
-
-
