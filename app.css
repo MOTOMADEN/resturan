@@ -269,6 +269,7 @@ img{
     gap: 8px;
 }
 
+
 .Best__seller{
     background-color: var(--yellow) !important; 
     border-color: #FFD429 !important;
@@ -277,13 +278,8 @@ img{
 .best__sell__foods{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-
-    /*
-        دگ لازم نیست مدیا کوِیِری براش ست کنی بخاطر مین مکس 
-     */
-
     grid-template-rows: repeat(2, 363px);
-    gap: 30px;
+    gap: 60px;
     margin-top: 3rem;
 }
 
@@ -293,6 +289,7 @@ img{
     grid-template-rows: 188px 135px;
     gap: 8px;
     padding-top: 20px;
+    max-width: 360px;
 }
 
 .box__top{
