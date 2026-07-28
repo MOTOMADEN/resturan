@@ -19,8 +19,6 @@
 |----------|--------------|----------------|
 | ![Homepage](./screenshots/homepage.png) | ![Menu](./screenshots/menu.png) | ![Offers](./screenshots/offers.png) |
 
-### 🎥 Video Demo
-[![Watch the video](https://img.youtube.com/vi/your-video-id/0.jpg)](https://youtu.be/your-video-id)
 
 ---
 
