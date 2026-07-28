@@ -8,8 +8,8 @@
 
 > **A fully responsive restaurant ordering system inspired by McDonald's brand identity**
 
-[🔗 Live Demo](https://your-demo-link.vercel.app)  
-[📂 GitHub Repository](https://github.com/yourusername/mcdonald-restaurant)
+[🔗 Live Demo](motomaden.github.io/resturan/)  
+[📂 GitHub Repository](https://github.com/motomaden.github.io/resturan/)
 
 ---
 
